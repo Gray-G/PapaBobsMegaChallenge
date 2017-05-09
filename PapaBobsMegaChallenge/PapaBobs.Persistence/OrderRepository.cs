@@ -8,25 +8,34 @@ namespace PapaBobs.Persistence
 {
     public class OrderRepository
     {
-        public static void CreateOrder()
+        public static void CreateOrder(DTO.OrderDTO orderDTO)
         {
             var db = new PapaBobsDbEntities();
 
-            // Code for db connection testing purposes
-            var order = new Order();
-            order.OrderId = Guid.NewGuid();
-            order.Size = DTO.Enums.SizeType.Large;
-            order.Crust = DTO.Enums.CrustType.Regular;
-            order.Pepperoni = true;
-            order.Name = "Test";
-            order.Address = "123 Main St";
-            order.Zip = "12345";
-            order.Phone = "123-2345";
-            order.PaymentType = DTO.Enums.PaymentType.Cash;
-            order.TotalCost = 16.50M;
-
+            var order = convertToEntity(orderDTO);
             db.Orders.Add(order);
             db.SaveChanges();
+        }
+
+        private static Order convertToEntity(DTO.OrderDTO orderDTO)
+        {
+            var order = new Order();
+            order.OrderId = orderDTO.OrderId;
+            order.Size = orderDTO.Size;
+            order.Crust = orderDTO.Crust;
+            order.Sausage = orderDTO.Sausage;
+            order.Pepperoni = orderDTO.Pepperoni;
+            order.Onions = orderDTO.Onions;
+            order.GreenPeppers = orderDTO.GreenPeppers;
+            order.TotalCost = orderDTO.TotalCost;
+            order.Name = orderDTO.Name;
+            order.Address = orderDTO.Address;
+            order.Zip = orderDTO.Zip;
+            order.Phone = orderDTO.Phone;
+            order.PaymentType = orderDTO.PaymentType;
+            order.Completed = orderDTO.Completed;
+
+            return order;
         }
     }
 }

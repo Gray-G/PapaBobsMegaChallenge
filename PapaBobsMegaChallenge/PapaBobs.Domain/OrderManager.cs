@@ -8,9 +8,23 @@ namespace PapaBobs.Domain
 {
     public class OrderManager
     {
-        public static void CreateOrder()
+        public static void CreateOrder(DTO.OrderDTO orderDTO)
         {
-            Persistence.OrderRepository.CreateOrder();
+            /*
+            var order = new DTO.OrderDTO();
+            order.OrderId = Guid.NewGuid();
+            order.Size = DTO.Enums.SizeType.Large;
+            order.Crust = DTO.Enums.CrustType.Regular;
+            order.Pepperoni = true;
+            order.Name = "Test";
+            order.Address = "123 Main St";
+            order.Zip = "12345";
+            order.Phone = "123-2345";
+            order.PaymentType = DTO.Enums.PaymentType.Cash;
+            order.TotalCost = 16.50M;
+            */
+
+            Persistence.OrderRepository.CreateOrder(orderDTO);
         }
     }
 }

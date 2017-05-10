@@ -24,7 +24,8 @@ namespace PapaBobs.Domain
             order.TotalCost = 16.50M;
             */
 
-            orderDTO.OrderId = new Guid();
+            orderDTO.OrderId = Guid.NewGuid();
+            orderDTO.TotalCost = PizzaPriceManager.CalculateCost(orderDTO);
 
             Persistence.OrderRepository.CreateOrder(orderDTO);
         }

@@ -18,12 +18,22 @@
 
         <div class="form-group">
             <label>Size: </label>
-            <asp:DropDownList ID="sizeDropDownList" runat="server" CssClass="form-control" AutoPostBack="true"></asp:DropDownList>
+            <asp:DropDownList ID="sizeDropDownList" runat="server" CssClass="form-control" AutoPostBack="true">
+                <asp:ListItem Selected="True">Choose one ...</asp:ListItem>
+                <asp:ListItem Value="Small">Small (12 inch - $12)</asp:ListItem>
+                <asp:ListItem Value="Medium">Medium (14 inch - $14)</asp:ListItem>
+                <asp:ListItem Value="Large">Large (16 inch - $16)</asp:ListItem>
+            </asp:DropDownList>
         </div>
         
         <div class="form-group">
             <label>Crust: </label>
-            <asp:DropDownList ID="crustDropDownList" runat="server" CssClass="form-control" AutoPostBack="true"></asp:DropDownList>
+            <asp:DropDownList ID="crustDropDownList" runat="server" CssClass="form-control" AutoPostBack="true">
+                <asp:ListItem Selected="True">Choose one ...</asp:ListItem>
+                <asp:ListItem>Regular</asp:ListItem>
+                <asp:ListItem>Thin</asp:ListItem>
+                <asp:ListItem Value="Thick">Thick (+ $2)</asp:ListItem>
+            </asp:DropDownList>
         </div>
         
         <div class="checkbox"><label><asp:CheckBox ID="sausageCheckBox" runat="server" AutoPostBack="true"/> Sausage</label></div>

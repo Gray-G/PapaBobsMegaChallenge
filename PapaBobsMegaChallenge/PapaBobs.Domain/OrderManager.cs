@@ -24,6 +24,8 @@ namespace PapaBobs.Domain
             order.TotalCost = 16.50M;
             */
 
+            orderDTO.OrderId = new Guid();
+
             Persistence.OrderRepository.CreateOrder(orderDTO);
         }
     }

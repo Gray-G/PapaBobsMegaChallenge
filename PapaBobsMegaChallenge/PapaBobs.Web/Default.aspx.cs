@@ -15,24 +15,49 @@ namespace PapaBobs.Web
 
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void orderButton_Click(object sender, EventArgs e)
         {
-            var order = new DTO.OrderDTO();
-            order.OrderId = Guid.NewGuid();
-            order.Size = DTO.Enums.SizeType.Large;
-            order.Crust = DTO.Enums.CrustType.Regular;
-            order.Pepperoni = true;
-            order.Name = "Test";
-            order.Address = "123 Main St";
-            order.Zip = "12345";
-            order.Phone = "123-2345";
-            order.PaymentType = DTO.Enums.PaymentType.Cash;
-            order.TotalCost = 16.50M;
+            if (nameTextBox.Text.Trim().Length == 0)
+            {
+                validationLabel.Text = "Please enter a name.";
+                validationLabel.Visible = true;
+                return;
+            }
+            if (addressTextBox.Text.Trim().Length == 0)
+            {
+                validationLabel.Text = "Please enter an address";
+                validationLabel.Visible = true;
+                return;
+            }
+            if (zipTextBox.Text.Trim().Length == 0)
+            {
+                validationLabel.Text = "Please enter a zip code.";
+                validationLabel.Visible = true;
+                return;
+            }
+            if (phoneTextBox.Text.Trim().Length == 0)
+            {
+                validationLabel.Text = "Please enter a phone number.";
+                validationLabel.Visible = true;
+                return;
+            }
 
-            Domain.OrderManager.CreateOrder(order);
+            try
+            {
+                var order = buildOrder();
+                Domain.OrderManager.CreateOrder(order);
+                Response.Redirect("success.aspx");
+            }
+            catch (Exception ex)
+            {
+                validationLabel.Text = ex.Message;
+                validationLabel.Visible = true;
+                return;
+            }
+            
         }
 
-        protected void orderButton_Click(object sender, EventArgs e)
+        private DTO.OrderDTO buildOrder()
         {
             var order = new DTO.OrderDTO();
             order.Size = determineSizeType();
@@ -42,12 +67,12 @@ namespace PapaBobs.Web
             order.Onions = onionsCheckBox.Checked;
             order.GreenPeppers = greenPeppersCheckBox.Checked;
             order.Name = nameTextBox.Text;
-            order.Address = determineAddress();
+            order.Address = addressTextBox.Text;
             order.Zip = zipTextBox.Text;
             order.Phone = phoneTextBox.Text;
             order.PaymentType = determinePaymentType();
 
-            Domain.OrderManager.CreateOrder(order);
+            return order;
         }
 
         private DTO.Enums.SizeType determineSizeType()
@@ -70,23 +95,34 @@ namespace PapaBobs.Web
             return crust;
         }
 
-        private string determineAddress()
-        {
-            if (addressTextBox.Text.Trim().Length == 0)
-            {
-                throw new Exception("Please enter an address");
-            }
-            else return addressTextBox.Text;
-        }
-
         private DTO.Enums.PaymentType determinePaymentType()
         {
+            DTO.Enums.PaymentType paymentType;
+
             if (cashRadioButton.Checked)
-                return DTO.Enums.PaymentType.Cash;
-            else if (creditRadioButton.Checked)
-                return DTO.Enums.PaymentType.Credit;
+                paymentType = DTO.Enums.PaymentType.Cash;
             else
-                throw new Exception("Please choose a payment type.");
+                paymentType = DTO.Enums.PaymentType.Credit;
+
+            return paymentType;
+        }
+
+        protected void recalculateTotalCost(object sender, EventArgs e)
+        {
+            if (sizeDropDownList.SelectedValue == String.Empty) return;
+            if (crustDropDownList.SelectedValue == String.Empty) return;
+
+            var order = buildOrder();
+
+            try
+            {
+                totalLabel.Text = Domain.PizzaPriceManager.CalculateCost(order).ToString("C");
+            }
+            catch (Exception)
+            {
+
+                // Swallow the error
+            }
         }
     }
 }

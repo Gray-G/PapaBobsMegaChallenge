@@ -17,7 +17,40 @@ namespace PapaBobs.Domain
             cost += calculateCrustCost(order, prices);
             cost += calculateToppingsCost(order, prices);
 
-            return 0M;
+            return cost;
+        }
+
+        private static decimal calculateToppingsCost(OrderDTO order, DTO.PizzaPriceDTO prices)
+        {
+            decimal cost = 0.0M;
+
+            cost += (order.Sausage) ? prices.SausageCost : 0M;
+            cost += (order.Pepperoni) ? prices.PepperoniCost : 0M;
+            cost += (order.Onions) ? prices.OnionsCost : 0M;
+            cost += (order.GreenPeppers) ? prices.GreenPeppersCost : 0M;
+
+            return cost;
+        }
+
+        private static decimal calculateCrustCost(OrderDTO order, DTO.PizzaPriceDTO prices)
+        {
+            decimal cost = 0.0M;
+
+            switch (order.Crust)
+            {
+                case DTO.Enums.CrustType.Regular:
+                    cost = prices.RegularCrustCost;
+                    break;
+                case DTO.Enums.CrustType.Thin:
+                    cost = prices.ThinCrustCost;
+                    break;
+                case DTO.Enums.CrustType.Thick:
+                    cost = prices.ThickCrustCost;
+                    break;
+                default:
+                    break;
+            }
+            return cost;
         }
 
         private static DTO.PizzaPriceDTO getPizzaPrices()
@@ -44,39 +77,6 @@ namespace PapaBobs.Domain
                 default:
                     break;
             }
-            return cost;
-        }
-
-        private static decimal calculateCrustCost(OrderDTO order, DTO.PizzaPriceDTO prices)
-        {
-            decimal cost = 0.0M;
-
-            switch (order.Crust)
-            {
-                case DTO.Enums.CrustType.Regular:
-                    cost = prices.RegularCrustCost;
-                    break;
-                case DTO.Enums.CrustType.Thin:
-                    cost = prices.ThinCrustCost;
-                    break;
-                case DTO.Enums.CrustType.Thick:
-                    cost = prices.ThickCrustCost;
-                    break;
-                default:
-                    break;
-            }
-            return cost;
-        }
-
-        private static decimal calculateToppingsCost(OrderDTO order, DTO.PizzaPriceDTO prices)
-        {
-            decimal cost = 0.0M;
-
-            cost += (order.Sausage) ? prices.SausageCost : 0M;
-            cost += (order.Pepperoni) ? prices.PepperoniCost : 0M;
-            cost += (order.Onions) ? prices.OnionsCost : 0M;
-            cost += (order.GreenPeppers) ? prices.GreenPeppersCost : 0M;
-
             return cost;
         }
     }

@@ -24,7 +24,7 @@ namespace PapaBobs.Persistence
             pizzaPriceDTO.MediumSizeCost = pizzaPrice.MediumSizeCost;
             pizzaPriceDTO.LargeSizeCost = pizzaPrice.LargeSizeCost;
             pizzaPriceDTO.ThinCrustCost = pizzaPrice.ThinCrustCost;
-            pizzaPriceDTO.ThinCrustCost = pizzaPrice.ThinCrustCost;
+            pizzaPriceDTO.ThickCrustCost = pizzaPrice.ThickCrustCost;
             pizzaPriceDTO.RegularCrustCost = pizzaPrice.RegularCrustCost;
             pizzaPriceDTO.SausageCost = pizzaPrice.SausageCost;
             pizzaPriceDTO.PepperoniCost = pizzaPrice.PepperoniCost;
